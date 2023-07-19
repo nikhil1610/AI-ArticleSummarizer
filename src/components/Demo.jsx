@@ -8,8 +8,11 @@ const Demo = () => {
 
   const [ article, setArticle ] = useState({
     url:'',
+    lang:'en',
     summary:'',
   });
+
+  const langOptions = ['ar','bn','ca','en','es','hi','hu','uk','ur','zh'];
 
   const [allArticles, setAllArticles] = useState([]);
 
@@ -29,7 +32,7 @@ const Demo = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault();
 
-    const {data} = await getSummary({articleUrl: article.url});
+    const {data} = await getSummary({articleUrl: article.url,lang:article.lang});
     
     if(data?.summary)
     {
@@ -69,6 +72,19 @@ const Demo = () => {
           setArticle({...article,url:e.target.value});
         }}
         />
+        <select className="absolute right-0 mr-12 flex 
+        w-10 h-7 items-center justify-center rounded border
+         border-gray-200 font-sans text-sm font-medium cursor-pointer
+         text-gray-400 focus:text-gray-700 focus:border-gray-700 hover:border-gray-700
+         after:" value={article.lang} onChange={(e)=>setArticle({...article,lang:e.target.value})}>
+          {langOptions.map((lang,index)=>(
+            <option className="appearance-none rounded border border-gray-200 font-medium cursor-pointer
+            text-gray-400 hover:bg-gray-600
+            " key={`${lang}-${index}`} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </select>
         <button type="submit"
         className="submit_btn peer-focus:border-gray-700
         peer-focus:text-gray-700"
@@ -118,10 +134,18 @@ const Demo = () => {
               {error?.data?.error}
             </span>
             </p>
-      ) :
+      ) : article.summary &&
       (
-        <div>
-          
+        <div className="flex flex-col gap-3">
+          <h2 className="font-satoshi font-bold text-gray-600
+          text-xl">
+            Article<span className="blue_gradient">
+              Summary</span>
+          </h2>
+          <div className="summary_box">
+            <p className="font-inter font-medium text-sm
+            text-gray-700">{article.summary}</p>
+          </div>
         </div>
       )}
     </div>

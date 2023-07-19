@@ -113,3 +113,14 @@
 .summary_box {
   @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-4;
 }
+
+ select option{
+  border-color: gray;
+  font-family: sans !important;
+  font-size: medium !important;
+  @apply rounded border border-gray-200 font-medium cursor-pointer
+  text-gray-400 hover:bg-gray-600;
+}
+select option:hover{
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity)) !important;
+}
