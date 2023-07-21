@@ -12,6 +12,8 @@ const Demo = () => {
     summary:'',
   });
 
+  const [copied, setCopied] = useState('');
+
   const langOptions = ['ar','bn','ca','en','es','hi','hu','uk','ur','zh'];
 
   const [allArticles, setAllArticles] = useState([]);
@@ -48,6 +50,12 @@ const Demo = () => {
         updatedAllArticles)); 
     }
 
+  }
+
+  const handleCopy = (copiedUrl) =>{
+    setCopied(copiedUrl);
+    navigator.clipboard.writeText(copiedUrl);
+    setTimeout(()=>setCopied(false),3000);
   }
 
   return (
@@ -102,11 +110,14 @@ const Demo = () => {
             className="link_card"
             onClick={()=>setArticle(article)}
              >
-              <div className="copy_btn">
+              <div className="copy_btn"
+                onClick={()=>handleCopy(article.url)}
+              >
                 <img
-                src={copy}
+                src={copied === article.url ? tick : copy }
                 alt="copy_icon"
-                className="w-[40%] h-[40%] object-contain"/>
+                className="w-[40%] h-[40%] object-contain"
+                />
               </div>
               <p className="flex-1 font-satoshi text-blue-700
               font-medium text-sm truncate">
